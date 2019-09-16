@@ -2,7 +2,7 @@ const fs = require ('fs')
 const addOrder = (order) => {
     const allOrders = loadOrders ()
 
-    allOrders.push({Order: drink})
+    allOrders.push({Order: order})
 
     saveOrders(allOrders)
 }
@@ -17,7 +17,7 @@ const loadOrders = () => {
     }
 }
 
-const saveOrders = () => {
+const saveOrders = (orders) => {
     const ordersJSON = JSON.stringify(orders)
     fs.writeFileSync('orders.json', ordersJSON)
 }
@@ -28,3 +28,22 @@ const listOrders = () => {
         console.log(order.Order)
     })
 }
+
+const removeOrder = (deletedOrder) => {
+        const allOrders = loadOrders()
+
+        const ordersToKeep = allOrders.filter((order) => {
+            return order.Order !== deletedOrder
+        })
+
+        saveOrders(ordersToKeep)
+}
+
+module.exports = {
+    addOrder,
+    loadOrders,
+    saveOrders,
+    listOrders,
+    removeOrder,
+}
+
